@@ -19,6 +19,11 @@ type User {
     thoughts: [Thought]
     friends: [User]
 }
+type Auth {
+  token: ID!
+  user: User
+}
+
 type Reaction {
     _id: ID
     reactionBody: String
@@ -27,6 +32,7 @@ type Reaction {
 }
 
 type Query {
+    me: User
     users: [User]
     user(username: String!): User
     thoughts(username: String): [Thought]
@@ -34,9 +40,14 @@ type Query {
   }
 
   type Mutation {
-    login(email: String!, password: String!): User
-    addUser(username: String!, email: String!, password: String!): User
+    login(email: String!, password: String!): Auth
+    addUser(username: String!, email: String!, password: String!): Auth
+    addThought(thoughtText: String!): Thought
+    addReaction(thoughtId: ID!, reactionBody:String!): Thought
+    addFiend(FriendId: ID!): User
   }
+
+
 `;
 
 // export the typeDefs
