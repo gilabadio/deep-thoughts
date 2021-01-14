@@ -1,9 +1,7 @@
 import React from 'react';
-
-// add these two library import statements
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -15,14 +13,13 @@ import SingleThought from './pages/SingleThought';
 import Profile from './pages/Profile';
 import Signup from './pages/Signup';
 
-
 const client = new ApolloClient({
   request: operation => {
     const token = localStorage.getItem('id_token');
 
     operation.setContext({
-      headers:{
-        authorizaton: token ? `Bearer ${token}` : ''
+      headers: {
+        authorization: token ? `Bearer ${token}` : ''
       }
     });
   },
@@ -37,15 +34,13 @@ function App() {
           <Header />
           <div className="container">
             <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/signup" component={Signup} />
-            <Route exact path="/profile" component={Profile} />
-            <Route exact path="/thought" component={SingleThought} />
-            <Route exact path="/profile/:username?" component={Profile}/>
-            <Route exact path="/thought/:id" component={SingleThought}/>
-            
-            <Route component={NoMatch}/>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/signup" component={Signup} />
+              <Route exact path="/profile/:username?" component={Profile} />
+              <Route exact path="/thought/:id" component={SingleThought} />
+
+              <Route component={NoMatch} />
             </Switch>
           </div>
           <Footer />
