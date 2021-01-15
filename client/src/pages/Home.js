@@ -1,6 +1,8 @@
 import React from 'react';
 import ThoughtList from '../components/ThoughtList';
 import FriendList from '../components/FriendList';
+import ThoughtForm from '../components/ThoughtForm';
+
 
 import Auth from '../utils/auth';
 import { useQuery } from '@apollo/react-hooks';
@@ -15,25 +17,33 @@ const Home = () => {
 
   return (
     <main>
-      <div className="flex-row justify-space-between">
-        <div className={`col-12 mb-3 ${loggedIn && 'col-lg-8'}`}>
-          {loading ? (
-            <div>Loading...</div>
-          ) : (
-            <ThoughtList thoughts={thoughts} title="Some Feed for Thought(s)..." />
-          )}
+    <div className="flex-row justify-space-between">
+      {loggedIn && (
+        <div className="col-12 mb-3">
+          <ThoughtForm />
         </div>
-        {loggedIn && userData ? (
-          <div className="col-12 col-lg-3 mb-3">
-            <FriendList
-              username={userData.me.username}
-              friendCount={userData.me.friendCount}
-              friends={userData.me.friends}
-            />
-          </div>
-        ) : null}
+      )}
+      <div className={`col-12 mb-3 ${loggedIn && "col-lg-8"}`}>
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          <ThoughtList
+            thoughts={thoughts}
+            title="Some food for thought(s)..."
+          />
+        )}
       </div>
-    </main>
+      {loggedIn && userData ? (
+        <div className="col-12 col-lg-3 mb-3">
+          <FriendList
+            username={userData.me.username}
+            friendCount={userData.me.friendCount}
+            friends={userData.me.friends}
+          />
+        </div>
+      ) : null}
+    </div>
+  </main>
   );
 };
 
